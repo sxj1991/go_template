@@ -1,0 +1,12 @@
+# 设置程序所处的模式，debug=true 调试模式，日志优先显示在控制台
+Debug: true
+# web服务配置
+HttpServer:
+  # 启动服务端口
+  Port: ":8080"
+  # 开启跨域
+  AllowCrossDomain: true
+# 日志文件路径
+LogFile: "../log/config.log"
+# 日志错误信息文件目录
+LogErrFile: "../log/config_err.log"
