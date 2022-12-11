@@ -1,0 +1,10 @@
+p, admin, system:role, list
+p, admin, system:role, add
+p, admin, system:role, update
+p, admin, system:role, delete
+p, normal1, system:role, list
+p, normal2, system:role, add
+
+g, zhangsan, admin
+g, lisi, normal1
+g, lisi, normal2
