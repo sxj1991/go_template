@@ -2,16 +2,16 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	userService "go_template/web/user"
+	login "go_template/web/login/service"
 )
 
 func router(route *gin.Engine) {
 
 	config := route.Group("/template/v1/")
 	{
-		// 用户登录
-		config.GET("login", userService.UserLogin)
 
+		// 添加权限
+		config.GET("login", login.Login)
 	}
 
 }
