@@ -17,7 +17,7 @@ func AuthMiddleware() func(c *gin.Context) {
 		if authHeader == "" {
 			c.JSON(http.StatusUnauthorized, gin.H{
 				"code": 401,
-				"msg":  "token认证失败",
+				"msg":  "token认证失败!",
 			})
 			c.Abort()
 			return
@@ -31,7 +31,7 @@ func AuthMiddleware() func(c *gin.Context) {
 			if token == nil {
 				c.JSON(http.StatusUnauthorized, gin.H{
 					"code": 401,
-					"msg":  "token认证失败",
+					"msg":  "token过期!",
 				})
 				c.Abort()
 				return
@@ -39,7 +39,7 @@ func AuthMiddleware() func(c *gin.Context) {
 		} else {
 			c.JSON(http.StatusUnauthorized, gin.H{
 				"code": 401,
-				"msg":  "token认证失败",
+				"msg":  "token认证失败!",
 			})
 			c.Abort()
 			return
@@ -50,7 +50,7 @@ func AuthMiddleware() func(c *gin.Context) {
 		if username == "" {
 			c.JSON(http.StatusUnauthorized, gin.H{
 				"code": 401,
-				"msg":  "token认证失败",
+				"msg":  "token认证失败!",
 			})
 			c.Abort()
 			return
