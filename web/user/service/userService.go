@@ -1,5 +1,13 @@
 package user
 
-type User struct {
-	name string `json:"name"`
+import (
+	"github.com/gin-gonic/gin"
+	"net/http"
+)
+
+func Welcome(c *gin.Context) {
+
+	c.JSON(http.StatusOK, gin.H{
+		"msg": "hello,world",
+	})
 }

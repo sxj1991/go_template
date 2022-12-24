@@ -3,6 +3,8 @@ package router
 import (
 	"github.com/gin-gonic/gin"
 	login "go_template/web/login/service"
+	"go_template/web/middleware"
+	user "go_template/web/user/service"
 )
 
 func router(route *gin.Engine) {
@@ -10,8 +12,14 @@ func router(route *gin.Engine) {
 	config := route.Group("/template/v1/")
 	{
 
-		// 添加权限
-		config.GET("login", login.Login)
+		// 登录
+		config.POST("login", login.Login)
+
+		// 认证中间件
+		config.Use(middleware.AuthMiddleware())
+
+		// 获取用户
+		config.GET("user", user.Welcome)
 	}
 
 }
