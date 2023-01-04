@@ -19,7 +19,7 @@ func router(route *gin.Engine) {
 		config.Use(middleware.AuthMiddleware())
 
 		// 获取用户
-		config.GET("user", user.Welcome)
+		config.GET("user", user.Users)
 	}
 
 }

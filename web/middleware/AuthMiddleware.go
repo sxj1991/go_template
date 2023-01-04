@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"go_template/share"
+	"go_template/web/response"
 	"go_template/web/tool"
 	"net/http"
 	"time"
@@ -15,10 +16,7 @@ func AuthMiddleware() func(c *gin.Context) {
 		//获取请求头token
 		var authHeader = c.Request.Header.Get(share.TOKENNAME)
 		if authHeader == "" {
-			c.JSON(http.StatusUnauthorized, gin.H{
-				"code": 401,
-				"msg":  "token认证失败!",
-			})
+			c.JSON(http.StatusUnauthorized, response.Fail(401, "token认证失败!"))
 			c.Abort()
 			return
 		}
@@ -29,18 +27,12 @@ func AuthMiddleware() func(c *gin.Context) {
 		if cacheByte != nil {
 			token := checkToken(cacheByte)
 			if token == nil {
-				c.JSON(http.StatusUnauthorized, gin.H{
-					"code": 401,
-					"msg":  "token过期!",
-				})
+				c.JSON(http.StatusUnauthorized, response.Fail(401, "token过期!"))
 				c.Abort()
 				return
 			}
 		} else {
-			c.JSON(http.StatusUnauthorized, gin.H{
-				"code": 401,
-				"msg":  "token认证失败!",
-			})
+			c.JSON(http.StatusUnauthorized, response.Fail(401, "token认证失败!"))
 			c.Abort()
 			return
 		}
@@ -48,10 +40,7 @@ func AuthMiddleware() func(c *gin.Context) {
 		// 解析JWT的函数来解析它
 		username, _ := tool.UnToken(authHeader)
 		if username == "" {
-			c.JSON(http.StatusUnauthorized, gin.H{
-				"code": 401,
-				"msg":  "token认证失败!",
-			})
+			c.JSON(http.StatusUnauthorized, response.Fail(401, "token认证失败!"))
 			c.Abort()
 			return
 		}

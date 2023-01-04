@@ -2,12 +2,12 @@ package user
 
 import (
 	"github.com/gin-gonic/gin"
+	"go_template/web/response"
 	"net/http"
 )
 
-func Welcome(c *gin.Context) {
+type user map[string]any
 
-	c.JSON(http.StatusOK, gin.H{
-		"msg": "hello,world",
-	})
+func Users(c *gin.Context) {
+	c.JSON(http.StatusOK, response.Success("响应成功", user{"name": "zhangsan", "age": 12, "verify": true}))
 }
