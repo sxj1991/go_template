@@ -6,7 +6,6 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"github.com/google/uuid"
-	"go_template/setting"
 	"go_template/share"
 	"io"
 	"time"
@@ -24,10 +23,7 @@ var secret = []byte("read@book@isGood")
 func GenToken(userName string) Token {
 	token, _ := createToken(userName)
 
-	uuid, err := uuid.NewUUID()
-	if err != nil {
-		setting.Log.Error(err)
-	}
+	uuid, _ := uuid.NewUUID()
 
 	return Token{
 		Exp:   time.Now().Add(share.TokenExpireDuration).Unix(),

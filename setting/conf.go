@@ -5,8 +5,10 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"go_template/share"
+	"go_template/web/tool"
 	"os"
 	"path"
+	"regexp"
 	"strings"
 )
 
@@ -19,6 +21,12 @@ type Config struct {
 	LogFile string `yaml:"LogFile"`
 	//日志错误信息文件目录
 	LogErrFile string `yaml:"LogErrFile"`
+	//admin
+	User struct {
+		Name       string `yaml:"Name"`
+		Password   string `yaml:"Password"`
+		VerifyCode string `yaml:"VerifyCode"`
+	} `yaml:"User"`
 }
 
 type httpServer struct {
@@ -64,11 +72,37 @@ func conf() {
 
 	v.OnConfigChange(func(e fsnotify.Event) {
 		_ = v.Unmarshal(&conf)
+		hasDecrypt(&conf)
 		CONF = &conf
 		logrus.Warnf("配置信息已修改：%v\n", conf)
 
 	})
 	_ = v.Unmarshal(&conf)
+	hasDecrypt(&conf)
 	CONF = &conf
 
+}
+
+/** 判断是否存在加密 并解密内容*/
+func hasDecrypt(conf *Config) {
+	if strings.Contains(conf.User.Name, "ENC") {
+		conf.User.Name = configDecrypt(conf.User.Name)
+	}
+
+	if strings.Contains(conf.User.Password, "ENC") {
+		conf.User.Password = configDecrypt(conf.User.Password)
+	}
+
+	if strings.Contains(conf.User.VerifyCode, "ENC") {
+		conf.User.VerifyCode = configDecrypt(conf.User.VerifyCode)
+	}
+}
+
+func configDecrypt(encrypt string) (decrypt string) {
+	r, _ := regexp.Compile("\\(.+?\\)")
+	aes, err := tool.DecryptByAes(r.FindString(encrypt)[1 : len(r.FindString(encrypt))-1])
+	if nil != err {
+		return ""
+	}
+	return string(aes)
 }

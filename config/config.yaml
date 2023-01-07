@@ -10,3 +10,8 @@ HttpServer:
 LogFile: "../log/config.log"
 # 日志错误信息文件目录
 LogErrFile: "../log/config_err.log"
+# admin 用户信息
+User:
+  Name: "ENC(AfKm3ibXAB+qXJqXqkIFog==)"
+  Password: "ENC(Sqj0hHSSa3uoXpiVqEAHoA==)"
+  VerifyCode: "ENC(Cvu9vUypbHyvWZ+Sr0cApw==)"

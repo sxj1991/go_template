@@ -52,9 +52,9 @@ func AesEncrypt(data []byte, key []byte) ([]byte, error) {
 	//初始化加密数据接收切片
 	crypted := make([]byte, len(encryptBytes))
 	//使用cbc加密模式
-	blockMode := cipher.NewCBCEncrypter(block, key[:blockSize])
+	blockMode := cipher.NewCFBEncrypter(block, key[:blockSize])
 	//执行加密
-	blockMode.CryptBlocks(crypted, encryptBytes)
+	blockMode.XORKeyStream(crypted, encryptBytes)
 	return crypted, nil
 }
 
@@ -68,11 +68,11 @@ func AesDecrypt(data []byte, key []byte) ([]byte, error) {
 	//获取块的大小
 	blockSize := block.BlockSize()
 	//使用cbc
-	blockMode := cipher.NewCBCDecrypter(block, key[:blockSize])
+	blockMode := cipher.NewCFBEncrypter(block, key[:blockSize])
 	//初始化解密数据接收切片
 	crypted := make([]byte, len(data))
 	//执行解密
-	blockMode.CryptBlocks(crypted, data)
+	blockMode.XORKeyStream(crypted, data)
 	//去除填充
 	crypted, err = pkcs7UnPadding(crypted)
 	if err != nil {

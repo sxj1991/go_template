@@ -2,6 +2,7 @@ package login
 
 import (
 	"github.com/gin-gonic/gin"
+	"go_template/setting"
 	"go_template/web/response"
 	"go_template/web/tool"
 	"net/http"
@@ -32,7 +33,7 @@ func Login(c *gin.Context) {
 
 func (l *login) checkUser() error {
 	// TODO 暂时没有用户数据库表 只不过一个基本校验
-	if l.UserName == "zhangsan" && l.Password == "123456" && l.VerifyCode == "qaz" {
+	if l.UserName == setting.CONF.User.Name && l.Password == setting.CONF.User.Password && l.VerifyCode == setting.CONF.User.VerifyCode {
 		return nil
 	}
 	return l
