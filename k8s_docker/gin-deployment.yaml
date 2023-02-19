@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: #Service 的名称
+  name: gin-service	#Service 的名称gin-service
+  labels:
+    name: gin #为该 Service 设置 key 为 app，value 为 nginx 的标签
+spec: #这是关于该 Service 的定义，描述了 Service 如何选择 Pod，如何被访问
+  selector: #标签选择
+    matchLabels:
+      name: gin
+  template:
+    metadata:
+      labels:
+        name: gin
+    spec:
+      containers:
+        - name: gin
+          image: xjsun/gogin:demo
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8088
