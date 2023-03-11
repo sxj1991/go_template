@@ -15,6 +15,9 @@ func router(route *gin.Engine) {
 		// 登录
 		config.POST("login", login.Login)
 
+		// ssh 连接服务器
+		config.GET("ssh", user.SSH)
+
 		// 认证中间件
 		config.Use(middleware.AuthMiddleware())
 
