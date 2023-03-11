@@ -14,7 +14,7 @@ import (
 func AuthMiddleware() func(c *gin.Context) {
 	return func(c *gin.Context) {
 		//获取请求头token
-		var authHeader = c.Request.Header.Get(share.TOKENNAME)
+		var authHeader = c.Request.Header.Get(share.TokenName)
 		if authHeader == "" {
 			c.JSON(http.StatusUnauthorized, response.Fail(401, "token认证失败!"))
 			c.Abort()
