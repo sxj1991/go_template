@@ -8,6 +8,7 @@ import (
 
 // RemoteSSH 远程连接服务器 返回操作指令集结果/**
 func RemoteSSH() string {
+	// ssh 客户端配置信息
 	config := &ssh.ClientConfig{
 		User: "用户名",
 		Auth: []ssh.AuthMethod{
@@ -16,6 +17,7 @@ func RemoteSSH() string {
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 		Timeout:         time.Second * 3,
 	}
+	// 获取client
 	client, err := ssh.Dial("tcp", "服务器地址:端口", config)
 	if err != nil {
 		log.Fatal(err.Error())
@@ -26,6 +28,7 @@ func RemoteSSH() string {
 			log.Fatal(err.Error())
 		}
 	}(client)
+	// 获取session
 	session, err := client.NewSession()
 	if err != nil {
 		log.Fatal(err.Error())
@@ -36,6 +39,7 @@ func RemoteSSH() string {
 			log.Fatal(err.Error())
 		}
 	}(session)
+	// 执行命令
 	output, _ := session.CombinedOutput("cd /;ls;pwd")
 	return string(output)
 }
