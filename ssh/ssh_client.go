@@ -20,12 +20,22 @@ func RemoteSSH() string {
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-	defer client.Close()
+	defer func(client *ssh.Client) {
+		err := client.Close()
+		if err != nil {
+			log.Fatal(err.Error())
+		}
+	}(client)
 	session, err := client.NewSession()
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-	defer session.Close()
+	defer func(session *ssh.Session) {
+		err := session.Close()
+		if err != nil {
+			log.Fatal(err.Error())
+		}
+	}(session)
 	output, _ := session.CombinedOutput("cd /;ls;pwd")
 	return string(output)
 }
