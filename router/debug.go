@@ -18,6 +18,7 @@ debug.GET("pprof/cmdline", gin.WrapF(pprof.Cmdline))：
 
 debug.GET("pprof/profile", gin.WrapF(pprof.Profile))：
 作用：返回一个 CPU 性能分析报告。
+使用：使用go tool pprof读取文件内存分析。需要安装golang环境
 示例用途：用于检查应用程序的 CPU 使用情况，找出性能瓶颈。
 
 debug.GET("pprof/symbol", gin.WrapF(pprof.Symbol))：
@@ -26,6 +27,7 @@ debug.GET("pprof/symbol", gin.WrapF(pprof.Symbol))：
 
 debug.GET("pprof/trace", gin.WrapF(pprof.Trace))：
 作用：返回一个运行时的跟踪报告。
+使用：使用go tool pprof读取文件内存分析。需要安装golang环境
 示例用途：用于跟踪程序的执行路径，分析调用关系和函数执行时间等信息。
 
 debug.GET("/pprof/allocs", gin.WrapH(pprof.Handler("allocs")))：
